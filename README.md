@@ -103,7 +103,7 @@ Get rtag cache usage statistics.
 
 
 [BadgeCoveralls]: https://coveralls.io/repos/voxgig/seneca-entity-util/badge.svg?branch=master&service=github
-[BadgeNpm]: https://badge.fury.io/js/seneca-entity-util.svg
+[BadgeNpm]: https://badge.fury.io/js/%40seneca%2Fentity-util.svg
 [BadgeTravis]: https://travis-ci.org/voxgig/seneca-entity-util.svg?branch=master
 [Coveralls]: https://coveralls.io/github/voxgig/seneca-entity-util?branch=master
 [Npm]: https://www.npmjs.com/package/seneca-entity-util
