@@ -1,6 +1,6 @@
 {
   "name": "@seneca/entity-util",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
