@@ -1,0 +1,44 @@
+{
+  "name": "@seneca/entity-util",
+  "version": "0.1.0",
+  "description": "Collection of optional utilities for Seneca entities.",
+  "main": "entity-util.js",
+  "scripts": {
+    "test": "lab -v -L -P test -t 80",
+    "seneca-doc": "seneca-doc",
+    "prettier": "prettier --write *.js lib/*.js bin/*.js test/*.js",
+    "coverage": "lab -v -P test -L -r html > coverage.html",
+    "coveralls": "lab -s -P test -r lcov | coveralls",
+    "clean-npm": "rm -rf node_modules package-lock.json",
+    "clean-yarn": "rm -rf node_modules yarn.lock",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
+    "repo-publish": "npm run prettier && npm test && npm run repo-tag && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voxgig/seneca-entity-util.git"
+  },
+  "keywords": [
+    "seneca",
+    "entity",
+    "util"
+  ],
+  "author": "Richard Rodger richardrodger.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/voxgig/seneca-entity-util/issues"
+  },
+  "homepage": "https://github.com/voxgig/seneca-entity-util#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "code": "^5.2.4",
+    "coveralls": "^3.0.2",
+    "lab": "^18.0.1",
+    "prettier": "^1.16.4",
+    "seneca": "plugin",
+    "seneca-promisify": "^0.8.0",
+    "seneca-doc": "^0.1.2",
+    "seneca-entity": "^4.0.0",
+    "seneca-plugin-validator": "^0.0.1"
+  }
+}
