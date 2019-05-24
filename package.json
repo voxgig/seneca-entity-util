@@ -5,14 +5,14 @@
   "main": "entity-util.js",
   "scripts": {
     "test": "lab -v -L -P test -t 80",
-    "seneca-doc": "seneca-doc",
+    "doc": "seneca-doc",
     "prettier": "prettier --write *.js lib/*.js bin/*.js test/*.js",
     "coverage": "lab -v -P test -L -r html > coverage.html",
     "coveralls": "lab -s -P test -r lcov | coveralls",
     "clean-npm": "rm -rf node_modules package-lock.json",
     "clean-yarn": "rm -rf node_modules yarn.lock",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm run prettier && npm test && npm run repo-tag && npm publish --access public"
+    "repo-publish": "npm run prettier && npm test && npm run doc && npm run repo-tag && npm publish --access public"
   },
   "repository": {
     "type": "git",

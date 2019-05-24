@@ -24,6 +24,11 @@ $ npm install seneca-entity-util seneca-promisify
 ## Action Patterns
 
 * [cmd:save,role:entity](#-cmdsaveroleentity-)
+* [cmd:load,role:entity](#-cmdloadroleentity-)
+* [cmd:list,role:entity](#-cmdlistroleentity-)
+* [cmd:remove,role:entity](#-cmdremoveroleentity-)
+* [resolve:rtag,role:cache](#-resolvertagrolecache-)
+* [role:cache,stats:rtag](#-rolecachestatsrtag-)
 
 
 <!--END:action-list-->
@@ -35,7 +40,54 @@ $ npm install seneca-entity-util seneca-promisify
 
 ### &laquo; `cmd:save,role:entity` &raquo;
 
-Override role:entity,cmd:save to util field.
+Override role:entity,cmd:save to apply utilities.
+
+
+
+----------
+### &laquo; `cmd:load,role:entity` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `cmd:list,role:entity` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `cmd:remove,role:entity` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `resolve:rtag,role:cache` &raquo;
+
+Use rtag to load cached version of expensive result.
+
+
+#### Parameters
+
+
+* _space_: string <i><small>{presence:required}</small></i>
+  * undefined
+* _key_: string <i><small>{presence:required}</small></i>
+  * undefined
+* _rtag_: string <i><small>{presence:required}</small></i>
+  * undefined
+* _resolver_: object <i><small>{func:true,presence:required}</small></i>
+  * undefined
+
+
+----------
+### &laquo; `role:cache,stats:rtag` &raquo;
+
+Get rtag cache usage statistics.
 
 
 
