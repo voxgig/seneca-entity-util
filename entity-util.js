@@ -222,7 +222,7 @@ function entity_util(options) {
         })
 
         cache_entry.data = cachedata
-        
+
         // Avoid spurious error messages form cache duplicates
         if (loading[id]) {
           var try_count = 0
@@ -233,14 +233,14 @@ function entity_util(options) {
             })
           }
         }
-        
+
         loading[id] = true
-        
+
         var cache_entry_exists = await seneca.entity('sys/cache').load$(id)
         if (!cache_entry_exists) {
           await cache_entry.save$()
         }
-        
+
         delete loading[id]
       }
 

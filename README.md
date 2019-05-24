@@ -7,6 +7,11 @@
 
 Utilities for [Seneca](senecajs.org) entities.
 
+* rtag: random revision tags generated per save; provides support for complex object caching.
+* archive: archival of deleted entities.
+* when: injection of created and modified time stamps
+* duration: injection of entity action duration times in results as meta data
+
 
 
 ## Install

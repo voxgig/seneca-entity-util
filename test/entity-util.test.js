@@ -315,9 +315,8 @@ lab.test('archive', async () => {
   expect(list[0].a).equal(2)
 
   try {
-    await a2.remove$({a:2})
-  }
-  catch(e) {
+    await a2.remove$({ a: 2 })
+  } catch (e) {
     expect(e.code).equal('archive-requires-id')
   }
 
