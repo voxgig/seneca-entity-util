@@ -385,7 +385,6 @@ lab.test('derive', async () => {
     id: 'f01',
   })
 
-
   await si.post('sys:entity,derive:add', {
     match: 'base:core,name:foo',
     spec: {
@@ -400,6 +399,7 @@ lab.test('derive', async () => {
   })
 
   let foo_b = await si.entity('core/foo', { id$: 'f02', a: 2, b: 'b2' }).save$()
+
   //console.log('foo_b', foo_b)
   expect(foo_b.data$(false)).equal({
     a: 2,
@@ -409,8 +409,6 @@ lab.test('derive', async () => {
     id: 'f02',
   })
 
-  
-  
   let bar_a = await si.entity('core/bar', { id$: 'b01', a: 1, b: 'b' }).save$()
   expect(bar_a.data$(false)).equal({
     a: 1,
@@ -419,11 +417,6 @@ lab.test('derive', async () => {
   })
   bar_a.remove$()
 
-
-
-  
-
-  
   var si1 = seneca_instance(null, { derive: { active: false } })
 
   await si1.post('sys:entity,derive:add', derive_spec)
