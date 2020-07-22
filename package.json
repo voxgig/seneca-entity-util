@@ -4,15 +4,16 @@
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
-    "test": "lab -v -L -P test -t 80",
+    "test": "lab -v -P test -t 80 -L -r console -o stdout -r html -o test/coverage.html",
     "doc": "seneca-doc",
     "prettier": "prettier --write *.js lib/*.js bin/*.js test/*.js",
     "coverage": "lab -v -P test -L -r html > coverage.html",
     "coveralls": "lab -s -P test -r lcov | coveralls",
-    "clean-npm": "rm -rf node_modules package-lock.json",
-    "clean-yarn": "rm -rf node_modules yarn.lock",
+    "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm run prettier && npm test && npm run doc && npm run repo-tag && npm publish --access public"
+    "reset": "npm run clean && npm i && npm test",
+    "repo-publish": "npm run clean && npm install --registry http://registry.npmjs.org && npm run repo-publish-quick",
+    "repo-publish-quick": "npm run prettier && npm test && npm run repo-tag && npm publish --registry http://registry.npmjs.org --access public"
   },
   "repository": {
     "type": "git",
@@ -31,14 +32,14 @@
   "homepage": "https://github.com/voxgig/seneca-entity-util#readme",
   "dependencies": {},
   "devDependencies": {
-    "code": "^5.2.4",
-    "coveralls": "^3.0.2",
-    "lab": "^18.0.1",
-    "prettier": "^1.16.4",
+    "@hapi/code": "^8.0.1",
+    "@hapi/lab": "^22.0.5",
+    "coveralls": "^3.1.0",
+    "prettier": "^2.0.5",
     "seneca": "plugin",
-    "seneca-promisify": "^0.8.0",
-    "seneca-doc": "^0.1.2",
-    "seneca-entity": "^4.0.0",
-    "seneca-plugin-validator": "^0.0.1"
+    "seneca-doc": "^2.1.3",
+    "seneca-entity": "^10.0.2",
+    "seneca-plugin-validator": "^0.6.1",
+    "seneca-promisify": "^2.0.0"
   }
 }

@@ -127,7 +127,7 @@ function entity_util(options) {
     if (options.archive.active) {
       var id = msg.q.id
       if (null == id) {
-        this.fail('archive-requires-id')
+        this.fail('archive-requires-id', {q:msg.q})
       }
       var old = await msg.qent.load$(id)
       var canon = old.canon$({ object: true })

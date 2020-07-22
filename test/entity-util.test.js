@@ -1,10 +1,9 @@
-/* Copyright (c) 2019 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2020 voxgig and other contributors, MIT License */
 'use strict'
 
-const Util = require('util')
 
-const Lab = require('lab')
-const Code = require('code')
+const Lab = require('@hapi/lab')
+const Code = require('@hapi/code')
 const lab = (exports.lab = Lab.script())
 const expect = Code.expect
 
@@ -14,9 +13,7 @@ const Plugin = require('..')
 
 lab.test(
   'validate',
-  Util.promisify(function(x, fin) {
-    PluginValidator(Plugin, module)(fin)
-  })
+  PluginValidator(Plugin, module)
 )
 
 lab.test('plugin-load', async () => {
@@ -373,7 +370,7 @@ lab.test('duplicate-rtag', async () => {
 })
 
 function seneca_instance(config, plugin_options) {
-  return Seneca(config, { legacy: { transport: false } })
+  return Seneca(config, { legacy: false })
     .test()
     .use('promisify')
     .use('entity')
