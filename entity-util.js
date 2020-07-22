@@ -12,27 +12,27 @@ module.exports.defaults = {
     stats: true,
 
     // TODO: mem-store should deep clone!
-    clone_before_hydrate: true
+    clone_before_hydrate: true,
   },
 
   when: {
     active: false,
     field_created: 't_c',
-    field_modified: 't_m'
+    field_modified: 't_m',
   },
 
   duration: {
     active: false,
     annotation: 'd$',
-    stats: true
+    stats: true,
   },
 
   // archiving of removed items
   archive: {
     active: false,
     entity: 'sys/archive',
-    custom_props: []
-  }
+    custom_props: [],
+  },
 }
 module.exports.errors = {}
 
@@ -48,8 +48,8 @@ function entity_util(options) {
     rtag: {
       hit: 0,
       miss: 0,
-      space: {}
-    }
+      space: {},
+    },
   }
 
   seneca
@@ -61,11 +61,11 @@ function entity_util(options) {
     .message('role:cache,stats:rtag', stats_rtag)
 
   Object.assign(stats_rtag, {
-    desc: 'Get rtag cache usage statistics.'
+    desc: 'Get rtag cache usage statistics.',
   })
 
   Object.assign(cmd_save_util, {
-    desc: 'Override role:entity,cmd:save to apply utilities.'
+    desc: 'Override role:entity,cmd:save to apply utilities.',
   })
 
   Object.assign(resolve_rtag, {
@@ -76,8 +76,8 @@ function entity_util(options) {
       rtag: Joi.string().required(),
 
       // Generate a fresh result to cache
-      resolver: Joi.func().required()
-    }
+      resolver: Joi.func().required(),
+    },
   })
 
   async function stats_rtag() {
@@ -127,14 +127,14 @@ function entity_util(options) {
     if (options.archive.active) {
       var id = msg.q.id
       if (null == id) {
-        this.fail('archive-requires-id', {q:msg.q})
+        this.fail('archive-requires-id', { q: msg.q })
       }
       var old = await msg.qent.load$(id)
       var canon = old.canon$({ object: true })
       var old_data = old.data$(false)
 
       var data = {}
-      options.archive.custom_props.forEach(p => {
+      options.archive.custom_props.forEach((p) => {
         data[p] = meta.custom[p]
       })
 
@@ -146,9 +146,7 @@ function entity_util(options) {
       data.base = canon.base
       data.name = canon.name
 
-      await this.entity(options.archive.entity)
-        .data$(data)
-        .save$()
+      await this.entity(options.archive.entity).data$(data).save$()
     }
 
     var out = await this.prior(msg)
@@ -193,7 +191,7 @@ function entity_util(options) {
       stats.rtag.hit++
       ;(stats.rtag.space[space] = stats.rtag.space[space] || {
         hit: 0,
-        miss: 0
+        miss: 0,
       }).hit++
 
       return entryout
@@ -204,7 +202,7 @@ function entity_util(options) {
       stats.rtag.miss++
       ;(stats.rtag.space[space] = stats.rtag.space[space] || {
         hit: 0,
-        miss: 0
+        miss: 0,
       }).miss++
 
       if (cachedata && false !== cachedata.rtag_cache$) {
@@ -218,7 +216,7 @@ function entity_util(options) {
 
         cache_entry = seneca.entity('sys/cache').make$({
           id$: id,
-          when: Date.now()
+          when: Date.now(),
         })
 
         cache_entry.data = cachedata
@@ -228,7 +226,7 @@ function entity_util(options) {
           var try_count = 0
           while (loading[id] && try_count < 11) {
             try_count++
-            await new Promise(r => {
+            await new Promise((r) => {
               setImmediate(r)
             })
           }
@@ -255,13 +253,13 @@ function entity_util(options) {
   return {
     export: {
       HIT: HIT,
-      MISS: MISS
-    }
+      MISS: MISS,
+    },
   }
 }
 
 const intern = (module.exports.intern = {
-  apply_duration: function(out, meta, start, options) {
+  apply_duration: function (out, meta, start, options) {
     if (options.duration.active) {
       var duration = Date.now() - start
 
@@ -274,5 +272,5 @@ const intern = (module.exports.intern = {
 
       // TODO: rolling stats
     }
-  }
+  },
 })

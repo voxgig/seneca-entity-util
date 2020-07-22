@@ -21,6 +21,45 @@ $ npm install seneca-entity-util seneca-promisify
 ```
 
 
+<!--START:options-->
+
+
+## Options
+
+* `rtag.active` : boolean <i><small>false</small></i>
+* `rtag.field` : string <i><small>"rtag"</small></i>
+* `rtag.len` : number <i><small>17</small></i>
+* `rtag.annotate` : boolean <i><small>true</small></i>
+* `rtag.stats` : boolean <i><small>true</small></i>
+* `rtag.clone_before_hydrate` : boolean <i><small>true</small></i>
+* `when.active` : boolean <i><small>false</small></i>
+* `when.field_created` : string <i><small>"t_c"</small></i>
+* `when.field_modified` : string <i><small>"t_m"</small></i>
+* `duration.active` : boolean <i><small>false</small></i>
+* `duration.annotation` : string <i><small>"d$"</small></i>
+* `duration.stats` : boolean <i><small>true</small></i>
+* `archive.active` : boolean <i><small>false</small></i>
+* `archive.entity` : string <i><small>"sys/archive"</small></i>
+* `archive.custom_props` : array <i><small></small></i>
+
+
+Set plugin options when loading with:
+```js
+
+
+seneca.use('entity_util', { name: value, ... })
+
+
+```
+
+
+<small>Note: <code>foo.bar</code> in the list above means 
+<code>{ foo: { bar: ... } }</code></small> 
+
+
+
+<!--END:options-->
+
 
 
 <!--START:action-list-->
@@ -28,12 +67,12 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Patterns
 
-* [cmd:save,role:entity](#-cmdsaveroleentity-)
-* [cmd:load,role:entity](#-cmdloadroleentity-)
-* [cmd:list,role:entity](#-cmdlistroleentity-)
-* [cmd:remove,role:entity](#-cmdremoveroleentity-)
-* [resolve:rtag,role:cache](#-resolvertagrolecache-)
+* [role:cache,resolve:rtag](#-rolecacheresolvertag-)
 * [role:cache,stats:rtag](#-rolecachestatsrtag-)
+* [role:entity,cmd:list](#-roleentitycmdlist-)
+* [role:entity,cmd:load](#-roleentitycmdload-)
+* [role:entity,cmd:remove](#-roleentitycmdremove-)
+* [role:entity,cmd:save](#-roleentitycmdsave-)
 
 
 <!--END:action-list-->
@@ -43,35 +82,7 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Descriptions
 
-### &laquo; `cmd:save,role:entity` &raquo;
-
-Override role:entity,cmd:save to apply utilities.
-
-
-
-----------
-### &laquo; `cmd:load,role:entity` &raquo;
-
-No description provided.
-
-
-
-----------
-### &laquo; `cmd:list,role:entity` &raquo;
-
-No description provided.
-
-
-
-----------
-### &laquo; `cmd:remove,role:entity` &raquo;
-
-No description provided.
-
-
-
-----------
-### &laquo; `resolve:rtag,role:cache` &raquo;
+### &laquo; `role:cache,resolve:rtag` &raquo;
 
 Use rtag to load cached version of expensive result.
 
@@ -79,20 +90,44 @@ Use rtag to load cached version of expensive result.
 #### Parameters
 
 
-* _space_: string <i><small>{presence:required}</small></i>
-  * undefined
-* _key_: string <i><small>{presence:required}</small></i>
-  * undefined
-* _rtag_: string <i><small>{presence:required}</small></i>
-  * undefined
-* _resolver_: object <i><small>{func:true,presence:required}</small></i>
-  * undefined
+* _space_ : string <i><small>"&nbsp;"</small></i>
+* _key_ : string <i><small>"&nbsp;"</small></i>
+* _rtag_ : string <i><small>"&nbsp;"</small></i>
+* _resolver_ : function <i><small>"&nbsp;"</small></i>
 
 
 ----------
 ### &laquo; `role:cache,stats:rtag` &raquo;
 
 Get rtag cache usage statistics.
+
+
+
+----------
+### &laquo; `role:entity,cmd:list` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `role:entity,cmd:load` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `role:entity,cmd:remove` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `role:entity,cmd:save` &raquo;
+
+Override role:entity,cmd:save to apply utilities.
 
 
 

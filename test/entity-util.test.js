@@ -1,7 +1,6 @@
 /* Copyright (c) 2019-2020 voxgig and other contributors, MIT License */
 'use strict'
 
-
 const Lab = require('@hapi/lab')
 const Code = require('@hapi/code')
 const lab = (exports.lab = Lab.script())
@@ -11,10 +10,7 @@ const PluginValidator = require('seneca-plugin-validator')
 const Seneca = require('seneca')
 const Plugin = require('..')
 
-lab.test(
-  'validate',
-  PluginValidator(Plugin, module)
-)
+lab.test('validate', PluginValidator(Plugin, module))
 
 lab.test('plugin-load', async () => {
   return await seneca_instance().ready()
@@ -59,10 +55,7 @@ lab.test('resolve', async () => {
     }
   }
 
-  var bar0 = await si
-    .entity('bar')
-    .make$({ b: 1 })
-    .save$()
+  var bar0 = await si.entity('bar').make$({ b: 1 }).save$()
   var foo0 = await si
     .entity('foo')
     .make$({ handle: 'foo0', a: 1, bar_id: bar0.id })
@@ -71,7 +64,7 @@ lab.test('resolve', async () => {
   var out0 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out0.foo.a).equal(1)
@@ -81,7 +74,7 @@ lab.test('resolve', async () => {
   var out1 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out1.foo.a).equal(1)
@@ -95,7 +88,7 @@ lab.test('resolve', async () => {
   var out2 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out2.foo.a).equal(1)
@@ -105,7 +98,7 @@ lab.test('resolve', async () => {
   var out3 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out3.foo.a).equal(1)
@@ -115,7 +108,7 @@ lab.test('resolve', async () => {
   var out4 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out4.foo.a).equal(1)
@@ -128,7 +121,7 @@ lab.test('resolve', async () => {
   var out5 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out5.foo.a).equal(1)
@@ -139,7 +132,7 @@ lab.test('resolve', async () => {
   var out6 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out6.foo.a).equal(1)
@@ -150,7 +143,7 @@ lab.test('resolve', async () => {
   expect(stats).equal({
     hit: 3,
     miss: 4,
-    space: { test0: { hit: 3, miss: 4 } }
+    space: { test0: { hit: 3, miss: 4 } },
   })
 })
 
@@ -170,10 +163,7 @@ lab.test('resolve-entity', async () => {
     }
   }
 
-  var bar0 = await si
-    .entity('bar')
-    .make$({ b: 1 })
-    .save$()
+  var bar0 = await si.entity('bar').make$({ b: 1 }).save$()
   var foo0 = await si
     .entity('foo')
     .make$({ handle: 'foo0', a: 1, bar_id: bar0.id })
@@ -182,7 +172,7 @@ lab.test('resolve-entity', async () => {
   var out0 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out0.b).equal(1)
@@ -191,7 +181,7 @@ lab.test('resolve-entity', async () => {
   var out1 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out1.b).equal(1)
@@ -204,7 +194,7 @@ lab.test('resolve-entity', async () => {
   var out2 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out2.b).equal(2)
@@ -213,7 +203,7 @@ lab.test('resolve-entity', async () => {
   var out3 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out3.b).equal(2)
@@ -222,7 +212,7 @@ lab.test('resolve-entity', async () => {
   var out4 = await si.post('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   expect(out4.b).equal(2)
@@ -232,24 +222,21 @@ lab.test('resolve-entity', async () => {
   expect(stats).equal({
     hit: 3,
     miss: 2,
-    space: { test0: { hit: 3, miss: 2 } }
+    space: { test0: { hit: 3, miss: 2 } },
   })
 })
 
 lab.test('when', async () => {
   var si = seneca_instance(null, { when: { active: true } })
 
-  var a1 = await si
-    .entity('zed/foo')
-    .data$({ a: 1 })
-    .save$()
+  var a1 = await si.entity('zed/foo').data$({ a: 1 }).save$()
 
   var a1_c = a1.t_c
   expect(a1.t_c).about(Date.now(), 200)
   expect(a1.t_m).about(Date.now(), 200)
   expect(a1.t_c).equal(a1.t_m)
 
-  await new Promise(r => {
+  await new Promise((r) => {
     setTimeout(r, 1000)
   })
   a1.x = 1
@@ -277,12 +264,12 @@ lab.test('duration', async () => {
   return new Promise((s, f) => {
     si.entity('zed/foo')
       .data$({ a: 1 })
-      .save$(function(err, a1, meta) {
+      .save$(function (err, a1, meta) {
         if (err) return f(err)
         expect(a1.d$).about(500, 100)
         expect(meta.custom.entity_util.duration[meta.id]).about(500, 100)
 
-        a1.list$(function(err, list) {
+        a1.list$(function (err, list) {
           if (err) return f(err)
           expect(list.d$).about(0, 10)
           s()
@@ -293,19 +280,13 @@ lab.test('duration', async () => {
 
 lab.test('archive', async () => {
   var si = seneca_instance(null, {
-    archive: { active: true, custom_props: ['qaz'] }
+    archive: { active: true, custom_props: ['qaz'] },
   })
   si.quiet()
   si = si.delegate(null, { custom: { qaz: { w: 1 } } })
 
-  var a1 = await si
-    .entity('zed/foo')
-    .data$({ a: 1 })
-    .save$()
-  var a2 = await si
-    .entity('zed/foo')
-    .data$({ a: 2 })
-    .save$()
+  var a1 = await si.entity('zed/foo').data$({ a: 1 }).save$()
+  var a2 = await si.entity('zed/foo').data$({ a: 2 }).save$()
 
   await a1.remove$()
   var list = await a1.list$()
@@ -324,7 +305,7 @@ lab.test('archive', async () => {
     qaz: { w: 1 },
     entity: '-/zed/foo',
     base: 'zed',
-    name: 'foo'
+    name: 'foo',
   })
 
   expect(a1r.data).includes({ a: 1 })
@@ -339,17 +320,14 @@ lab.test('duplicate-rtag', async () => {
     return async function resolver() {
       var foo = await si.entity('foo').load$(foo_id)
       var bar = await si.entity('bar').load$(foo.bar_id)
-      await new Promise(r => {
+      await new Promise((r) => {
         setTimeout(r, 1000)
       })
       return { foo: foo, bar: bar }
     }
   }
 
-  var bar0 = await si
-    .entity('bar')
-    .make$({ b: 1 })
-    .save$()
+  var bar0 = await si.entity('bar').make$({ b: 1 }).save$()
   var foo0 = await si
     .entity('foo')
     .make$({ handle: 'foo0', a: 1, bar_id: bar0.id })
@@ -358,12 +336,12 @@ lab.test('duplicate-rtag', async () => {
   si.act('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
   si.act('role:cache,resolve:rtag,space:test0', {
     key: foo0.handle,
     rtag: foo0.rtag,
-    resolver: make_resolver(foo0.id)
+    resolver: make_resolver(foo0.id),
   })
 
   await si.ready()

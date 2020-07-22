@@ -6,7 +6,7 @@
   "scripts": {
     "test": "lab -v -P test -t 80 -L -r console -o stdout -r html -o test/coverage.html",
     "doc": "seneca-doc",
-    "prettier": "prettier --write *.js lib/*.js bin/*.js test/*.js",
+    "prettier": "prettier --write *.js test/*.js",
     "coverage": "lab -v -P test -L -r html > coverage.html",
     "coveralls": "lab -s -P test -r lcov | coveralls",
     "clean": "rm -rf node_modules package-lock.json yarn.lock",
@@ -37,7 +37,7 @@
     "coveralls": "^3.1.0",
     "prettier": "^2.0.5",
     "seneca": "plugin",
-    "seneca-doc": "^2.1.3",
+    "@seneca/doc": "^4.0.0",
     "seneca-entity": "^10.0.2",
     "seneca-plugin-validator": "^0.6.1",
     "seneca-promisify": "^2.0.0"
