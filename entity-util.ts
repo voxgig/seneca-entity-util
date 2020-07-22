@@ -37,8 +37,18 @@ module.exports.defaults = {
     entity: 'sys/archive',
     custom_props: [],
   },
+
+  derive: {
+    active: false
+  }
 }
 module.exports.errors = {}
+
+
+interface DeriveSpec {
+  fields: { [_: string]: (options: any, derive: DeriveSpec, msg: any, meta: any) => any }
+}
+
 
 
 function entity_util(options: any) {
@@ -57,11 +67,18 @@ function entity_util(options: any) {
     },
   }
 
+  const derive_router = seneca.util.Patrun()
+
+  // TODO: rename role->sys
   seneca
     .message('role:entity,cmd:save', cmd_save_util)
     .message('role:entity,cmd:load', cmd_load_util)
     .message('role:entity,cmd:list', cmd_list_util)
     .message('role:entity,cmd:remove', cmd_remove_util)
+
+    .message('sys:entity,derive:add', derive_add)
+    .message('sys:entity,derive:list', derive_list)
+
     .message('role:cache,resolve:rtag', resolve_rtag)
     .message('role:cache,stats:rtag', stats_rtag)
 
@@ -85,6 +102,18 @@ function entity_util(options: any) {
     },
   })
 
+
+  async function derive_add(msg: any) {
+    var match = this.util.Jsonic(msg.match)
+    derive_router.add(match, msg.spec)
+  }
+
+  async function derive_list(msg: any) {
+    var match = this.util.Jsonic(msg.match)
+    return derive_router.list(match)
+  }
+
+
   async function stats_rtag() {
     return stats.rtag
   }
@@ -101,6 +130,13 @@ function entity_util(options: any) {
       ent[options.when.field_modified] = start
       if (null == ent.id) {
         ent[options.when.field_created] = start
+      }
+    }
+
+    if (options.derive.active) {
+      let derive = derive_router.find(msg)
+      if (derive) {
+        intern.apply_derive(options, derive, msg, meta)
       }
     }
 
@@ -256,9 +292,11 @@ function entity_util(options: any) {
   }
 
   return {
+    name: 'entity-util',
     export: {
       HIT: HIT,
       MISS: MISS,
+      derive: derive_router
     },
   }
 }
@@ -278,4 +316,13 @@ const intern = (module.exports.intern = {
       // TODO: rolling stats
     }
   },
+
+  apply_derive: function(options: any, derive: DeriveSpec, msg: any, meta: any) {
+    for (let fieldname in derive.fields) {
+      let fieldspec: any = derive.fields[fieldname]
+      if ('function' == typeof fieldspec.build) {
+        msg.ent[fieldname] = fieldspec.build(msg.ent, { options, msg, meta, derive })
+      }
+    }
+  }
 })

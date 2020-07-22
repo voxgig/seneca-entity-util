@@ -41,13 +41,14 @@ $ npm install seneca-entity-util seneca-promisify
 * `archive.active` : boolean <i><small>false</small></i>
 * `archive.entity` : string <i><small>"sys/archive"</small></i>
 * `archive.custom_props` : array <i><small></small></i>
+* `derive.active` : boolean <i><small>false</small></i>
 
 
 Set plugin options when loading with:
 ```js
 
 
-seneca.use('entity_util', { name: value, ... })
+seneca.use('entity-util', { name: value, ... })
 
 
 ```
@@ -73,6 +74,8 @@ seneca.use('entity_util', { name: value, ... })
 * [role:entity,cmd:load](#-roleentitycmdload-)
 * [role:entity,cmd:remove](#-roleentitycmdremove-)
 * [role:entity,cmd:save](#-roleentitycmdsave-)
+* [sys:entity,derive:add](#-sysentityderiveadd-)
+* [sys:entity,derive:list](#-sysentityderivelist-)
 
 
 <!--END:action-list-->
@@ -128,6 +131,20 @@ No description provided.
 ### &laquo; `role:entity,cmd:save` &raquo;
 
 Override role:entity,cmd:save to apply utilities.
+
+
+
+----------
+### &laquo; `sys:entity,derive:add` &raquo;
+
+No description provided.
+
+
+
+----------
+### &laquo; `sys:entity,derive:list` &raquo;
+
+No description provided.
 
 
 

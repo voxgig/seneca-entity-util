@@ -1,12 +1,12 @@
 {
   "name": "@seneca/entity-util",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
     "watch": "tsc -w -d",
     "build": "tsc -d",
-    "test": "lab -v -P test -t 80 -L -r console -o stdout -r html -o test/coverage.html",
+    "test": "lab -v -P test -t 80 -L --sourcemaps --transform node_modules/lab-transform-typescript -r console -o stdout -r html -o test/coverage.html",
     "doc": "seneca-doc",
     "prettier": "prettier --write *.js test/*.js",
     "coverage": "lab -v -P test -L -r html > coverage.html",

@@ -30,6 +30,9 @@ module.exports.defaults = {
         entity: 'sys/archive',
         custom_props: [],
     },
+    derive: {
+        active: false
+    }
 };
 module.exports.errors = {};
 function entity_util(options) {
@@ -45,11 +48,15 @@ function entity_util(options) {
             space: {},
         },
     };
+    const derive_router = seneca.util.Patrun();
+    // TODO: rename role->sys
     seneca
         .message('role:entity,cmd:save', cmd_save_util)
         .message('role:entity,cmd:load', cmd_load_util)
         .message('role:entity,cmd:list', cmd_list_util)
         .message('role:entity,cmd:remove', cmd_remove_util)
+        .message('sys:entity,derive:add', derive_add)
+        .message('sys:entity,derive:list', derive_list)
         .message('role:cache,resolve:rtag', resolve_rtag)
         .message('role:cache,stats:rtag', stats_rtag);
     Object.assign(stats_rtag, {
@@ -68,6 +75,14 @@ function entity_util(options) {
             resolver: Joi.func().required(),
         },
     });
+    async function derive_add(msg) {
+        var match = this.util.Jsonic(msg.match);
+        derive_router.add(match, msg.spec);
+    }
+    async function derive_list(msg) {
+        var match = this.util.Jsonic(msg.match);
+        return derive_router.list(match);
+    }
     async function stats_rtag() {
         return stats.rtag;
     }
@@ -81,6 +96,12 @@ function entity_util(options) {
             ent[options.when.field_modified] = start;
             if (null == ent.id) {
                 ent[options.when.field_created] = start;
+            }
+        }
+        if (options.derive.active) {
+            let derive = derive_router.find(msg);
+            if (derive) {
+                intern.apply_derive(options, derive, msg, meta);
             }
         }
         var out = await this.prior(msg);
@@ -202,9 +223,11 @@ function entity_util(options) {
         }
     }
     return {
+        name: 'entity-util',
         export: {
             HIT: HIT,
             MISS: MISS,
+            derive: derive_router
         },
     };
 }
@@ -220,5 +243,13 @@ const intern = (module.exports.intern = {
             // TODO: rolling stats
         }
     },
+    apply_derive: function (options, derive, msg, meta) {
+        for (let fieldname in derive.fields) {
+            let fieldspec = derive.fields[fieldname];
+            if ('function' == typeof fieldspec.build) {
+                msg.ent[fieldname] = fieldspec.build(msg.ent, { options, msg, meta, derive });
+            }
+        }
+    }
 });
 //# sourceMappingURL=entity-util.js.map
