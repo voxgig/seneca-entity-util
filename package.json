@@ -1,6 +1,6 @@
 {
   "name": "@seneca/entity-util",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "coveralls": "^3.1.0",
     "lab-transform-typescript": "^3.0.1",
     "prettier": "^2.0.5",
-    "seneca": "plugin",
+    "seneca": "^3.22.0",
     "seneca-entity": "^10.0.2",
     "seneca-plugin-validator": "^0.6.1",
     "seneca-promisify": "^2.0.0",

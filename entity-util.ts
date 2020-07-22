@@ -306,7 +306,7 @@ const intern = (module.exports.intern = {
     if (options.duration.active) {
       var duration = Date.now() - start
 
-      meta.custom.entity_util = meta.custom.entity_util = { duration: {} }
+      meta.custom.entity_util = (meta.custom.entity_util || { duration: {} })
       meta.custom.entity_util.duration[meta.id] = duration
 
       if (out) {

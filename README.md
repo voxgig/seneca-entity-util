@@ -3,6 +3,9 @@
 [![Npm][BadgeNpm]][Npm]
 [![Travis][BadgeTravis]][Travis]
 [![Coveralls][BadgeCoveralls]][Coveralls]
+[![DeepScan grade](https://deepscan.io/api/teams/5016/projects/13018/branches/211297/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5016&pid=13018&bid=211297)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a642840360b4eb209b21/maintainability)](https://codeclimate.com/github/voxgig/seneca-entity-util/maintainability)
+[![devDependencies Status](https://david-dm.org/voxgig/seneca-entity-util/dev-status.svg)](https://david-dm.org/voxgig/seneca-entity-util?type=dev)
 
 
 Utilities for [Seneca](senecajs.org) entities.

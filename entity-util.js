@@ -235,7 +235,7 @@ const intern = (module.exports.intern = {
     apply_duration: function (out, meta, start, options) {
         if (options.duration.active) {
             var duration = Date.now() - start;
-            meta.custom.entity_util = meta.custom.entity_util = { duration: {} };
+            meta.custom.entity_util = (meta.custom.entity_util || { duration: {} });
             meta.custom.entity_util.duration[meta.id] = duration;
             if (out) {
                 out[options.duration.annotation] = duration;
