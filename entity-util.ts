@@ -104,8 +104,18 @@ function entity_util(options: any) {
 
 
   async function derive_add(msg: any) {
-    var match = this.util.Jsonic(msg.match)
-    derive_router.add(match, msg.spec)
+    let match = this.util.Jsonic(msg.match)
+
+    let spec = derive_router.find(match, true)
+
+    if (null != spec) {
+      spec = this.util.deep(spec, msg.spec)
+    }
+    else {
+      spec = msg.spec
+    }
+
+    derive_router.add(match, spec)
   }
 
   async function derive_list(msg: any) {
@@ -133,14 +143,20 @@ function entity_util(options: any) {
       }
     }
 
+    //console.log('EU save ', options.derive.active)
     if (options.derive.active) {
       let derive = derive_router.find(msg)
+      //console.log('EU save derive', derive, msg)
+
       if (derive) {
         intern.apply_derive(options, derive, msg, meta)
       }
     }
 
+    //console.log('EU prior', msg.ent.data$())
     var out = await this.prior(msg)
+    //console.log('EU prior out', out.data$())
+
     intern.apply_duration(out, meta, start, options)
     return out
   }
@@ -320,9 +336,14 @@ const intern = (module.exports.intern = {
   apply_derive: function(options: any, derive: DeriveSpec, msg: any, meta: any) {
     for (let fieldname in derive.fields) {
       let fieldspec: any = derive.fields[fieldname]
-      if ('function' == typeof fieldspec.build) {
+
+      //console.log('EU apply_derive', fieldname, 'function' === typeof fieldspec.build, fieldspec)
+
+      if ('function' === typeof fieldspec.build) {
         msg.ent[fieldname] = fieldspec.build(msg.ent, { options, msg, meta, derive })
       }
+
+      //console.log('EU apply_derive ent', msg.ent.data$())
     }
   }
 })
