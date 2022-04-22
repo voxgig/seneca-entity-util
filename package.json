@@ -7,6 +7,7 @@
     "watch": "tsc -w -d",
     "build": "tsc -d",
     "test": "lab -v -P test -t 80 -L --sourcemaps --transform node_modules/lab-transform-typescript -r console -o stdout -r html -o test/coverage.html",
+    "test-some": "lab -v -P test --sourcemaps --transform node_modules/lab-transform-typescript -g",
     "doc": "seneca-doc",
     "prettier": "prettier --write *.js test/*.js",
     "coverage": "lab -v -P test -L -r html > coverage.html",
@@ -33,18 +34,23 @@
   },
   "homepage": "https://github.com/voxgig/seneca-entity-util#readme",
   "dependencies": {},
+  "peerDependencies": {
+    "seneca": ">=3",
+    "seneca-entity": ">=16",
+    "seneca-promisify": ">=2"
+  },
   "devDependencies": {
-    "@hapi/code": "^8.0.1",
-    "@hapi/lab": "^22.0.5",
-    "@seneca/doc": "^4.0.0",
-    "@types/node": "^14.0.24",
-    "coveralls": "^3.1.0",
+    "@hapi/code": "^8.0.7",
+    "@hapi/lab": "^24.6.0",
+    "@seneca/doc": "^4.1.0",
+    "@types/node": "^17.0.25",
+    "coveralls": "^3.1.1",
     "lab-transform-typescript": "^3.0.1",
-    "prettier": "^2.0.5",
+    "prettier": "^2.6.2",
     "seneca": "^3.22.0",
     "seneca-entity": "^10.0.2",
     "seneca-plugin-validator": "^0.6.1",
     "seneca-promisify": "^2.0.0",
-    "typescript": "^3.9.7"
+    "typescript": "^4.6.3"
   }
 }

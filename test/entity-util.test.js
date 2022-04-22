@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2020 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
 'use strict'
 
 const Lab = require('@hapi/lab')

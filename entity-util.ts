@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2020 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
 /* $lab:coverage:off$ */
 'use strict'
 
@@ -40,7 +40,9 @@ module.exports.defaults = {
 
   derive: {
     active: false
-  }
+  },
+
+  errors: {}
 }
 module.exports.errors = {}
 

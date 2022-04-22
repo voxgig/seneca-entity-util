@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2020 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
 /* $lab:coverage:off$ */
 'use strict';
 /* $lab:coverage:on$ */
@@ -32,7 +32,8 @@ module.exports.defaults = {
     },
     derive: {
         active: false
-    }
+    },
+    errors: {}
 };
 module.exports.errors = {};
 function entity_util(options) {
