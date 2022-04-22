@@ -29,37 +29,7 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Options
 
-* `rtag.active` : boolean <i><small>false</small></i>
-* `rtag.field` : string <i><small>"rtag"</small></i>
-* `rtag.len` : number <i><small>17</small></i>
-* `rtag.annotate` : boolean <i><small>true</small></i>
-* `rtag.stats` : boolean <i><small>true</small></i>
-* `rtag.clone_before_hydrate` : boolean <i><small>true</small></i>
-* `when.active` : boolean <i><small>false</small></i>
-* `when.field_created` : string <i><small>"t_c"</small></i>
-* `when.field_modified` : string <i><small>"t_m"</small></i>
-* `duration.active` : boolean <i><small>false</small></i>
-* `duration.annotation` : string <i><small>"d$"</small></i>
-* `duration.stats` : boolean <i><small>true</small></i>
-* `archive.active` : boolean <i><small>false</small></i>
-* `archive.entity` : string <i><small>"sys/archive"</small></i>
-* `archive.custom_props` : array <i><small></small></i>
-* `derive.active` : boolean <i><small>false</small></i>
-
-
-Set plugin options when loading with:
-```js
-
-
-seneca.use('entity-util', { name: value, ... })
-
-
-```
-
-
-<small>Note: <code>foo.bar</code> in the list above means 
-<code>{ foo: { bar: ... } }</code></small> 
-
+*None.*
 
 
 <!--END:options-->

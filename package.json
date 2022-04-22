@@ -1,6 +1,6 @@
 {
   "name": "@seneca/entity-util",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
     "reset": "npm run clean && npm i && npm test",
     "repo-publish": "npm run clean && npm install --registry http://registry.npmjs.org && npm run repo-publish-quick",
-    "repo-publish-quick": "npm run prettier && npm run build && npm test && npm run doc && npm run repo-tag && npm publish --registry http://registry.npmjs.org --access public"
+    "repo-publish-quick": "npm run prettier && npm run build && npm test && npm run doc && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access public"
   },
   "repository": {
     "type": "git",
