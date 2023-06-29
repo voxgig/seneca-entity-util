@@ -52,10 +52,10 @@ function entity_util(options) {
     const derive_router = seneca.util.Patrun();
     // TODO: rename role->sys
     seneca
-        .message('role:entity,cmd:save', cmd_save_util)
-        .message('role:entity,cmd:load', cmd_load_util)
-        .message('role:entity,cmd:list', cmd_list_util)
-        .message('role:entity,cmd:remove', cmd_remove_util)
+        .message('sys:entity,cmd:save', cmd_save_util)
+        .message('sys:entity,cmd:load', cmd_load_util)
+        .message('sys:entity,cmd:list', cmd_list_util)
+        .message('sys:entity,cmd:remove', cmd_remove_util)
         .message('sys:entity,derive:add', derive_add)
         .message('sys:entity,derive:list', derive_list)
         .message('role:cache,resolve:rtag', resolve_rtag)
@@ -64,7 +64,7 @@ function entity_util(options) {
         desc: 'Get rtag cache usage statistics.',
     });
     Object.assign(cmd_save_util, {
-        desc: 'Override role:entity,cmd:save to apply utilities.',
+        desc: 'Override sys:entity,cmd:save to apply utilities.',
     });
     Object.assign(resolve_rtag, {
         desc: 'Use rtag to load cached version of expensive result.',

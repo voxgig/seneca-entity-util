@@ -18,6 +18,11 @@ lab.test('plugin-load', async () => {
 
 lab.test('happy', async () => {
   var si = seneca_instance(null, { rtag: { active: true } })
+  // await si.ready()
+  // console.log(si.list())
+  // console.log(si.find('role:entity,cmd:save'))
+  // console.log(si.find('sys:entity,cmd:save'))
+
   var foo_a = await si.entity('foo', { a: 1 }).save$()
   expect(foo_a).contains({ a: 1 })
   expect(foo_a.rtag.length).equal(
@@ -247,19 +252,28 @@ lab.test('when', async () => {
 })
 
 lab.test('duration', async () => {
-  var si = await Seneca(null, { legacy: { transport: false } })
+  const si = await Seneca({ legacy: false })
     .test()
     .use('promisify')
     .use('entity')
     .ready()
 
+  // console.log(si.private$.translationrouter.toString())
+  // console.log('===')
+
   si.add('role:entity,cmd:save', function save_delay(msg, reply) {
     setTimeout(this.prior.bind(this, msg, reply), 500)
   })
 
+  // console.log(si.private$.translationrouter.toString())
+
   si.use(EntityUtilPlugin, { duration: { active: true } })
 
   await si.ready()
+
+  // console.log(si.list())
+  // console.log(si.find('sys:entity,cmd:save'))
+  // console.log(si.find('role:entity,cmd:save'))
 
   var out = await si.entity('zed/foo').load$('not-a-foo')
   expect(out).not.exists()
@@ -291,8 +305,12 @@ lab.test('archive', async () => {
   var a1 = await si.entity('zed/foo').data$({ a: 1 }).save$()
   var a2 = await si.entity('zed/foo').data$({ a: 2 }).save$()
 
+  let list = await si.entity('zed/foo').list$()
+  expect(list.length).equal(2)
+  // console.log(list)
+
   await a1.remove$()
-  var list = await a1.list$()
+  list = await a1.list$()
   expect(list[0].a).equal(2)
 
   try {
@@ -432,9 +450,12 @@ lab.test('derive', async () => {
 })
 
 function seneca_instance(config, plugin_options) {
-  return Seneca(config, { legacy: false })
-    .test()
-    .use('promisify')
-    .use('entity')
-    .use(EntityUtilPlugin, plugin_options)
+  return (
+    Seneca(config, { legacy: false })
+      // .test('print')
+      .test()
+      .use('promisify')
+      .use('entity')
+      .use(EntityUtilPlugin, plugin_options)
+  )
 }

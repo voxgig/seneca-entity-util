@@ -41,14 +41,14 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Patterns
 
-* [role:cache,resolve:rtag](#-rolecacheresolvertag-)
-* [role:cache,stats:rtag](#-rolecachestatsrtag-)
-* [role:entity,cmd:list](#-roleentitycmdlist-)
-* [role:entity,cmd:load](#-roleentitycmdload-)
-* [role:entity,cmd:remove](#-roleentitycmdremove-)
-* [role:entity,cmd:save](#-roleentitycmdsave-)
-* [sys:entity,derive:add](#-sysentityderiveadd-)
-* [sys:entity,derive:list](#-sysentityderivelist-)
+* ["role":"cache","resolve":"rtag"](#-rolecacheresolvertag-)
+* ["role":"cache","stats":"rtag"](#-rolecachestatsrtag-)
+* ["sys":"entity","cmd":"list"](#-sysentitycmdlist-)
+* ["sys":"entity","cmd":"load"](#-sysentitycmdload-)
+* ["sys":"entity","cmd":"remove"](#-sysentitycmdremove-)
+* ["sys":"entity","cmd":"save"](#-sysentitycmdsave-)
+* ["sys":"entity","derive":"add"](#-sysentityderiveadd-)
+* ["sys":"entity","derive":"list"](#-sysentityderivelist-)
 
 
 <!--END:action-list-->
@@ -58,7 +58,7 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Descriptions
 
-### &laquo; `role:cache,resolve:rtag` &raquo;
+### &laquo; `"role":"cache","resolve":"rtag"` &raquo;
 
 Use rtag to load cached version of expensive result.
 
@@ -73,49 +73,49 @@ Use rtag to load cached version of expensive result.
 
 
 ----------
-### &laquo; `role:cache,stats:rtag` &raquo;
+### &laquo; `"role":"cache","stats":"rtag"` &raquo;
 
 Get rtag cache usage statistics.
 
 
 
 ----------
-### &laquo; `role:entity,cmd:list` &raquo;
+### &laquo; `"sys":"entity","cmd":"list"` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `role:entity,cmd:load` &raquo;
+### &laquo; `"sys":"entity","cmd":"load"` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `role:entity,cmd:remove` &raquo;
+### &laquo; `"sys":"entity","cmd":"remove"` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `role:entity,cmd:save` &raquo;
+### &laquo; `"sys":"entity","cmd":"save"` &raquo;
 
-Override role:entity,cmd:save to apply utilities.
+Override sys:entity,cmd:save to apply utilities.
 
 
 
 ----------
-### &laquo; `sys:entity,derive:add` &raquo;
+### &laquo; `"sys":"entity","derive":"add"` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `sys:entity,derive:list` &raquo;
+### &laquo; `"sys":"entity","derive":"list"` &raquo;
 
 No description provided.
 
