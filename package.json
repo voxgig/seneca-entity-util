@@ -47,7 +47,7 @@
     "lab-transform-typescript": "^3.0.1",
     "prettier": "^3.0.3",
     "seneca": "^3.32.0",
-    "seneca-entity": "^24.0.0",
+    "seneca-entity": "^25.0.0",
     "seneca-plugin-validator": "^0.6.1",
     "seneca-promisify": "^3.6.0",
     "typescript": "^5.2.2"
