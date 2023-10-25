@@ -23,6 +23,7 @@ module.exports.defaults = {
     active: false,
     field_created: 't_c',
     field_modified: 't_m',
+    human: 'no', // 'yes' - generate human readable stamps, 'only' - only human stamps
   },
 
   duration: {
@@ -131,7 +132,7 @@ function entity_util(options: any) {
   }
 
   async function cmd_save_util(msg: any, meta: any) {
-    var start = Date.now()
+    const start = Date.now()
     const ent = msg.ent
 
     if (options.rtag.active) {
@@ -140,8 +141,24 @@ function entity_util(options: any) {
 
     if (options.when.active) {
       ent[options.when.field_modified] = start
+      let human = 'n' !== options.when.human[0]
+      let humanStamp = human ? intern.humanify(start) : -1
+
+      if (human) {
+        ent[options.when.field_modified + 'h'] = humanStamp
+      }
+
       if (null == ent.id) {
         ent[options.when.field_created] = start
+
+        if (human) {
+          ent[options.when.field_created + 'h'] = humanStamp
+        }
+      }
+
+      if ('o' === options.when.human[0]) {
+        delete ent[options.when.field_created]
+        delete ent[options.when.field_modified]
       }
     }
 
@@ -347,5 +364,10 @@ const intern = (module.exports.intern = {
 
       //console.log('EU apply_derive ent', msg.ent.data$())
     }
+  },
+
+  humanify(when: number) {
+    const d = new Date(when)
+    return +(d.toISOString().replace(/[^\d]/g, ''))
   }
 })

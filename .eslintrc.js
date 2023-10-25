@@ -7,7 +7,8 @@ module.exports = {
     ecmaVersion: 8
   },
   rules: {
-    'no-console': 0
+    'no-console': 0,
+    'require-yield': 0,
   },
   globals: {
     Promise: 'readonly'

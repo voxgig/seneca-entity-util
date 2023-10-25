@@ -1,6 +1,16 @@
 /* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
 /* $lab:coverage:off$ */
 'use strict';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 /* $lab:coverage:on$ */
 module.exports = entity_util;
 module.exports.defaults = {
@@ -18,6 +28,7 @@ module.exports.defaults = {
         active: false,
         field_created: 't_c',
         field_modified: 't_m',
+        human: 'no', // 'yes' - generate human readable stamps, 'only' - only human stamps
     },
     duration: {
         active: false,
@@ -76,163 +87,191 @@ function entity_util(options) {
             resolver: Joi.func().required(),
         },
     });
-    async function derive_add(msg) {
-        let match = this.util.Jsonic(msg.match);
-        let spec = derive_router.find(match, true);
-        if (null != spec) {
-            spec = this.util.deep(spec, msg.spec);
-        }
-        else {
-            spec = msg.spec;
-        }
-        derive_router.add(match, spec);
-    }
-    async function derive_list(msg) {
-        var match = this.util.Jsonic(msg.match);
-        return derive_router.list(match);
-    }
-    async function stats_rtag() {
-        return stats.rtag;
-    }
-    async function cmd_save_util(msg, meta) {
-        var start = Date.now();
-        const ent = msg.ent;
-        if (options.rtag.active) {
-            ent[options.rtag.field] = rtag(); // always override
-        }
-        if (options.when.active) {
-            ent[options.when.field_modified] = start;
-            if (null == ent.id) {
-                ent[options.when.field_created] = start;
+    function derive_add(msg) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let match = this.util.Jsonic(msg.match);
+            let spec = derive_router.find(match, true);
+            if (null != spec) {
+                spec = this.util.deep(spec, msg.spec);
             }
-        }
-        //console.log('EU save ', options.derive.active)
-        if (options.derive.active) {
-            let derive = derive_router.find(msg);
-            //console.log('EU save derive', derive, msg)
-            if (derive) {
-                intern.apply_derive(options, derive, msg, meta);
+            else {
+                spec = msg.spec;
             }
-        }
-        //console.log('EU prior', msg.ent.data$())
-        var out = await this.prior(msg);
-        //console.log('EU prior out', out.data$())
-        intern.apply_duration(out, meta, start, options);
-        return out;
+            derive_router.add(match, spec);
+        });
     }
-    async function cmd_load_util(msg, meta) {
-        var start = Date.now();
-        var out = await this.prior(msg);
-        intern.apply_duration(out, meta, start, options);
-        return out;
+    function derive_list(msg) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var match = this.util.Jsonic(msg.match);
+            return derive_router.list(match);
+        });
     }
-    async function cmd_list_util(msg, meta) {
-        var start = Date.now();
-        var out = await this.prior(msg);
-        intern.apply_duration(out, meta, start, options);
-        return out;
+    function stats_rtag() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return stats.rtag;
+        });
     }
-    async function cmd_remove_util(msg, meta) {
-        var start = Date.now();
-        // TODO: only supports id-based remove
-        if (options.archive.active) {
-            var id = msg.q.id;
-            if (null == id) {
-                this.fail('archive-requires-id', { q: msg.q });
+    function cmd_save_util(msg, meta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const start = Date.now();
+            const ent = msg.ent;
+            if (options.rtag.active) {
+                ent[options.rtag.field] = rtag(); // always override
             }
-            var old = await msg.qent.load$(id);
-            var canon = old.canon$({ object: true });
-            var old_data = old.data$(false);
-            var data = {};
-            options.archive.custom_props.forEach((p) => {
-                data[p] = meta.custom[p];
-            });
-            data.when = Date.now();
-            data.data = old_data;
-            data.entity = old.entity$;
-            data.ent_id = old.id;
-            data.zone = canon.zone;
-            data.base = canon.base;
-            data.name = canon.name;
-            await this.entity(options.archive.entity).data$(data).save$();
-        }
-        var out = await this.prior(msg);
-        intern.apply_duration(out, meta, start, options);
-        return out;
-    }
-    const loading = {};
-    async function resolve_rtag(msg) {
-        const seneca = this;
-        const space = msg.space;
-        const key = msg.key;
-        const rtag = msg.rtag;
-        const resolver = msg.resolver;
-        const id = space + '~' + key + '~' + rtag;
-        var cache_entry = await seneca.entity('sys/cache').load$(id);
-        if (cache_entry) {
-            var entrydata = cache_entry.data;
-            var entryout = entrydata;
-            // TODO: need a general entity hydration util as also needed by transport
-            if (entrydata.__entity$) {
-                if (options.rtag.clone_before_hydrate) {
-                    entrydata = Object.assign({}, entrydata);
+            if (options.when.active) {
+                ent[options.when.field_modified] = start;
+                let human = 'n' !== options.when.human[0];
+                let humanStamp = human ? intern.humanify(start) : -1;
+                if (human) {
+                    ent[options.when.field_modified + 'h'] = humanStamp;
                 }
-                entrydata.entity$ = entrydata.__entity$;
-                delete entrydata.__entity$;
-                entryout = seneca.entity(entrydata);
-            }
-            if (options.rtag.annotate) {
-                entryout.rtag$ = HIT;
-            }
-            stats.rtag.hit++;
-            (stats.rtag.space[space] = stats.rtag.space[space] || {
-                hit: 0,
-                miss: 0,
-            }).hit++;
-            return entryout;
-        }
-        else {
-            var origdata = await resolver.call(seneca);
-            var cachedata = origdata;
-            stats.rtag.miss++;
-            (stats.rtag.space[space] = stats.rtag.space[space] || {
-                hit: 0,
-                miss: 0,
-            }).miss++;
-            if (cachedata && false !== cachedata.rtag_cache$) {
-                if (cachedata.entity$) {
-                    cachedata = cachedata.data$();
-                    // Avoid seneca-entity auto replacement of entities with id
-                    cachedata.__entity$ = cachedata.entity$;
-                    delete cachedata.entity$;
-                }
-                cache_entry = seneca.entity('sys/cache').make$({
-                    id$: id,
-                    when: Date.now(),
-                });
-                cache_entry.data = cachedata;
-                // Avoid spurious error messages form cache duplicates
-                if (loading[id]) {
-                    var try_count = 0;
-                    while (loading[id] && try_count < 11) {
-                        try_count++;
-                        await new Promise((r) => {
-                            setImmediate(r);
-                        });
+                if (null == ent.id) {
+                    ent[options.when.field_created] = start;
+                    if (human) {
+                        ent[options.when.field_created + 'h'] = humanStamp;
                     }
                 }
-                loading[id] = true;
-                var cache_entry_exists = await seneca.entity('sys/cache').load$(id);
-                if (!cache_entry_exists) {
-                    await cache_entry.save$();
+                if ('o' === options.when.human[0]) {
+                    delete ent[options.when.field_created];
+                    delete ent[options.when.field_modified];
                 }
-                delete loading[id];
             }
-            if (options.rtag.annotate) {
-                origdata.rtag$ = MISS;
+            //console.log('EU save ', options.derive.active)
+            if (options.derive.active) {
+                let derive = derive_router.find(msg);
+                //console.log('EU save derive', derive, msg)
+                if (derive) {
+                    intern.apply_derive(options, derive, msg, meta);
+                }
             }
-            return origdata;
-        }
+            //console.log('EU prior', msg.ent.data$())
+            var out = yield this.prior(msg);
+            //console.log('EU prior out', out.data$())
+            intern.apply_duration(out, meta, start, options);
+            return out;
+        });
+    }
+    function cmd_load_util(msg, meta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var start = Date.now();
+            var out = yield this.prior(msg);
+            intern.apply_duration(out, meta, start, options);
+            return out;
+        });
+    }
+    function cmd_list_util(msg, meta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var start = Date.now();
+            var out = yield this.prior(msg);
+            intern.apply_duration(out, meta, start, options);
+            return out;
+        });
+    }
+    function cmd_remove_util(msg, meta) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var start = Date.now();
+            // TODO: only supports id-based remove
+            if (options.archive.active) {
+                var id = msg.q.id;
+                if (null == id) {
+                    this.fail('archive-requires-id', { q: msg.q });
+                }
+                var old = yield msg.qent.load$(id);
+                var canon = old.canon$({ object: true });
+                var old_data = old.data$(false);
+                var data = {};
+                options.archive.custom_props.forEach((p) => {
+                    data[p] = meta.custom[p];
+                });
+                data.when = Date.now();
+                data.data = old_data;
+                data.entity = old.entity$;
+                data.ent_id = old.id;
+                data.zone = canon.zone;
+                data.base = canon.base;
+                data.name = canon.name;
+                yield this.entity(options.archive.entity).data$(data).save$();
+            }
+            var out = yield this.prior(msg);
+            intern.apply_duration(out, meta, start, options);
+            return out;
+        });
+    }
+    const loading = {};
+    function resolve_rtag(msg) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const seneca = this;
+            const space = msg.space;
+            const key = msg.key;
+            const rtag = msg.rtag;
+            const resolver = msg.resolver;
+            const id = space + '~' + key + '~' + rtag;
+            var cache_entry = yield seneca.entity('sys/cache').load$(id);
+            if (cache_entry) {
+                var entrydata = cache_entry.data;
+                var entryout = entrydata;
+                // TODO: need a general entity hydration util as also needed by transport
+                if (entrydata.__entity$) {
+                    if (options.rtag.clone_before_hydrate) {
+                        entrydata = Object.assign({}, entrydata);
+                    }
+                    entrydata.entity$ = entrydata.__entity$;
+                    delete entrydata.__entity$;
+                    entryout = seneca.entity(entrydata);
+                }
+                if (options.rtag.annotate) {
+                    entryout.rtag$ = HIT;
+                }
+                stats.rtag.hit++;
+                (stats.rtag.space[space] = stats.rtag.space[space] || {
+                    hit: 0,
+                    miss: 0,
+                }).hit++;
+                return entryout;
+            }
+            else {
+                var origdata = yield resolver.call(seneca);
+                var cachedata = origdata;
+                stats.rtag.miss++;
+                (stats.rtag.space[space] = stats.rtag.space[space] || {
+                    hit: 0,
+                    miss: 0,
+                }).miss++;
+                if (cachedata && false !== cachedata.rtag_cache$) {
+                    if (cachedata.entity$) {
+                        cachedata = cachedata.data$();
+                        // Avoid seneca-entity auto replacement of entities with id
+                        cachedata.__entity$ = cachedata.entity$;
+                        delete cachedata.entity$;
+                    }
+                    cache_entry = seneca.entity('sys/cache').make$({
+                        id$: id,
+                        when: Date.now(),
+                    });
+                    cache_entry.data = cachedata;
+                    // Avoid spurious error messages form cache duplicates
+                    if (loading[id]) {
+                        var try_count = 0;
+                        while (loading[id] && try_count < 11) {
+                            try_count++;
+                            yield new Promise((r) => {
+                                setImmediate(r);
+                            });
+                        }
+                    }
+                    loading[id] = true;
+                    var cache_entry_exists = yield seneca.entity('sys/cache').load$(id);
+                    if (!cache_entry_exists) {
+                        yield cache_entry.save$();
+                    }
+                    delete loading[id];
+                }
+                if (options.rtag.annotate) {
+                    origdata.rtag$ = MISS;
+                }
+                return origdata;
+            }
+        });
     }
     return {
         name: 'entity-util',
@@ -264,6 +303,10 @@ const intern = (module.exports.intern = {
             }
             //console.log('EU apply_derive ent', msg.ent.data$())
         }
+    },
+    humanify(when) {
+        const d = new Date(when);
+        return +(d.toISOString().replace(/[^\d]/g, ''));
     }
 });
 //# sourceMappingURL=entity-util.js.map

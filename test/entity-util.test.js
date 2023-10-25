@@ -26,7 +26,7 @@ lab.test('happy', async () => {
   var foo_a = await si.entity('foo', { a: 1 }).save$()
   expect(foo_a).contains({ a: 1 })
   expect(foo_a.rtag.length).equal(
-    si.find_plugin('entity_util').defaults.rtag.len
+    si.find_plugin('entity_util').defaults.rtag.len,
   )
 
   var first = foo_a.rtag
@@ -249,6 +249,15 @@ lab.test('when', async () => {
   await a1.save$()
   expect(a1.t_c).equal(a1_c)
   expect(a1.t_m).about(Date.now(), 200)
+
+  let dh = +new Date().toISOString().replace(/[^\d]/g, '')
+  const s1 = seneca_instance(null, { when: { active: true, human: 'yes' } })
+  const b1 = await s1.entity('bar').data$({ b: 1 }).save$()
+  // console.log(b1)
+  expect(b1.t_ch).about(dh, 200)
+  expect(b1.t_mh).about(dh, 200)
+  expect('' + b1.t_ch).length(17)
+  expect('' + b1.t_mh).length(17)
 })
 
 lab.test('duration', async () => {
@@ -388,7 +397,7 @@ lab.test('derive', async () => {
 
   let derive_router = si.export('entity-util').derive
   expect(derive_router.toString()).equal(
-    'base=core, name=foo -> <[object Object]>'
+    'base=core, name=foo -> <[object Object]>',
   )
 
   let out = await si.post('sys:entity,derive:list,match:{base:core}')
