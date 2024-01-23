@@ -366,8 +366,12 @@ const intern = (module.exports.intern = {
     }
   },
 
+  // TODO: confirm works
   humanify(when: number) {
     const d = new Date(when)
-    return +(d.toISOString().replace(/[^\d]/g, ''))
+    // Only accurate to hundreth of a second as integer must be < 2^53
+    return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''))
+
+    // return +(d.toISOString().replace(/[^\d]/g, ''))
   }
 })

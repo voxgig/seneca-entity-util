@@ -250,14 +250,14 @@ lab.test('when', async () => {
   expect(a1.t_c).equal(a1_c)
   expect(a1.t_m).about(Date.now(), 200)
 
-  let dh = +new Date().toISOString().replace(/[^\d]/g, '')
+  let dh = +new Date().toISOString().replace(/[^\d]/g, '').replace(/\d$/, '')
   const s1 = seneca_instance(null, { when: { active: true, human: 'yes' } })
   const b1 = await s1.entity('bar').data$({ b: 1 }).save$()
-  // console.log(b1)
+  // console.log(dh)
   expect(b1.t_ch).about(dh, 200)
   expect(b1.t_mh).about(dh, 200)
-  expect('' + b1.t_ch).length(17)
-  expect('' + b1.t_mh).length(17)
+  expect('' + b1.t_ch).length(16)
+  expect('' + b1.t_mh).length(16)
 })
 
 lab.test('duration', async () => {

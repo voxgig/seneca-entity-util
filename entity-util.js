@@ -304,9 +304,12 @@ const intern = (module.exports.intern = {
             //console.log('EU apply_derive ent', msg.ent.data$())
         }
     },
+    // TODO: confirm works
     humanify(when) {
         const d = new Date(when);
-        return +(d.toISOString().replace(/[^\d]/g, ''));
+        // Only accurate to hundreth of a second as integer must be < 2^53
+        return +(d.toISOString().replace(/[^\d]/g, '').replace(/\d$/, ''));
+        // return +(d.toISOString().replace(/[^\d]/g, ''))
     }
 });
 //# sourceMappingURL=entity-util.js.map
