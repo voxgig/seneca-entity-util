@@ -29,7 +29,13 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Options
 
-*None.*
+* `rtag` : object
+* `when` : object
+* `duration` : object
+* `archive` : object
+* `derive` : object
+* `errors` : object
+* `init$` : boolean
 
 
 <!--END:options-->
@@ -41,14 +47,14 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Patterns
 
-* ["role":"cache","resolve":"rtag"](#-rolecacheresolvertag-)
-* ["role":"cache","stats":"rtag"](#-rolecachestatsrtag-)
-* ["sys":"entity","cmd":"list"](#-sysentitycmdlist-)
-* ["sys":"entity","cmd":"load"](#-sysentitycmdload-)
-* ["sys":"entity","cmd":"remove"](#-sysentitycmdremove-)
-* ["sys":"entity","cmd":"save"](#-sysentitycmdsave-)
-* ["sys":"entity","derive":"add"](#-sysentityderiveadd-)
-* ["sys":"entity","derive":"list"](#-sysentityderivelist-)
+* [role:cache,resolve:rtag](#-rolecacheresolvertag-)
+* [role:cache,stats:rtag](#-rolecachestatsrtag-)
+* [sys:entity,cmd:list](#-sysentitycmdlist-)
+* [sys:entity,cmd:load](#-sysentitycmdload-)
+* [sys:entity,cmd:remove](#-sysentitycmdremove-)
+* [sys:entity,cmd:save](#-sysentitycmdsave-)
+* [sys:entity,derive:add](#-sysentityderiveadd-)
+* [sys:entity,derive:list](#-sysentityderivelist-)
 
 
 <!--END:action-list-->
@@ -58,7 +64,7 @@ $ npm install seneca-entity-util seneca-promisify
 
 ## Action Descriptions
 
-### &laquo; `"role":"cache","resolve":"rtag"` &raquo;
+### &laquo; `role:cache,resolve:rtag` &raquo;
 
 Use rtag to load cached version of expensive result.
 
@@ -66,56 +72,56 @@ Use rtag to load cached version of expensive result.
 #### Parameters
 
 
-* _space_ : string <i><small>"&nbsp;"</small></i>
-* _key_ : string <i><small>"&nbsp;"</small></i>
-* _rtag_ : string <i><small>"&nbsp;"</small></i>
-* _resolver_ : function <i><small>"&nbsp;"</small></i>
+* __space__ : string <i><small>"&nbsp;"</small></i>
+* __key__ : string <i><small>"&nbsp;"</small></i>
+* __rtag__ : string <i><small>"&nbsp;"</small></i>
+* __resolver__ : function <i><small>"&nbsp;"</small></i>
 
 
 ----------
-### &laquo; `"role":"cache","stats":"rtag"` &raquo;
+### &laquo; `role:cache,stats:rtag` &raquo;
 
 Get rtag cache usage statistics.
 
 
 
 ----------
-### &laquo; `"sys":"entity","cmd":"list"` &raquo;
+### &laquo; `sys:entity,cmd:list` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `"sys":"entity","cmd":"load"` &raquo;
+### &laquo; `sys:entity,cmd:load` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `"sys":"entity","cmd":"remove"` &raquo;
+### &laquo; `sys:entity,cmd:remove` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `"sys":"entity","cmd":"save"` &raquo;
+### &laquo; `sys:entity,cmd:save` &raquo;
 
 Override sys:entity,cmd:save to apply utilities.
 
 
 
 ----------
-### &laquo; `"sys":"entity","derive":"add"` &raquo;
+### &laquo; `sys:entity,derive:add` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `"sys":"entity","derive":"list"` &raquo;
+### &laquo; `sys:entity,derive:list` &raquo;
 
 No description provided.
 

@@ -1,8 +1,12 @@
-/* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2024 voxgig and other contributors, MIT License */
 /* $lab:coverage:off$ */
 'use strict'
 
 /* $lab:coverage:on$ */
+
+
+// TODO: replace with Gubu
+const Joi = require('@hapi/joi')
 
 
 module.exports = entity_util
@@ -56,7 +60,6 @@ interface DeriveSpec {
 
 function entity_util(options: any) {
   const seneca = this
-  const Joi = seneca.util.Joi
   const rtag = seneca.util.Nid({ length: options.rtag.len })
 
   const HIT = 1

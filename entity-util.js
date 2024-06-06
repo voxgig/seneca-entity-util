@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2022 voxgig and other contributors, MIT License */
+/* Copyright (c) 2019-2024 voxgig and other contributors, MIT License */
 /* $lab:coverage:off$ */
 'use strict';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -12,6 +12,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* $lab:coverage:on$ */
+// TODO: replace with Gubu
+const Joi = require('@hapi/joi');
 module.exports = entity_util;
 module.exports.defaults = {
     // revision tag
@@ -49,7 +51,6 @@ module.exports.defaults = {
 module.exports.errors = {};
 function entity_util(options) {
     const seneca = this;
-    const Joi = seneca.util.Joi;
     const rtag = seneca.util.Nid({ length: options.rtag.len });
     const HIT = 1;
     const MISS = 2;
