@@ -6,7 +6,7 @@
 
 
 // TODO: replace with Gubu
-const Joi = require('@hapi/joi')
+// const Joi = require('@hapi/joi')
 
 
 module.exports = entity_util
@@ -98,14 +98,15 @@ function entity_util(options: any) {
 
   Object.assign(resolve_rtag, {
     desc: 'Use rtag to load cached version of expensive result.',
-    validate: {
-      space: Joi.string().required(),
-      key: Joi.string().required(),
-      rtag: Joi.string().required(),
 
-      // Generate a fresh result to cache
-      resolver: Joi.func().required(),
-    },
+    // validate: {
+    //   space: Joi.string().required(),
+    //   key: Joi.string().required(),
+    //   rtag: Joi.string().required(),
+
+    //   // Generate a fresh result to cache
+    //   resolver: Joi.func().required(),
+    // },
   })
 
 

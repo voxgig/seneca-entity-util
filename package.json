@@ -1,6 +1,6 @@
 {
   "name": "@seneca/entity-util",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Collection of optional utilities for Seneca entities.",
   "main": "entity-util.js",
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/voxgig/seneca-entity-util#readme",
   "peerDependencies": {
-    "seneca": ">=3",
+    "seneca": ">=3||>=4.0.0-rc2",
     "seneca-entity": ">=26",
     "seneca-promisify": ">=3"
   },
@@ -51,8 +51,5 @@
     "seneca-plugin-validator": "^0.6.1",
     "seneca-promisify": "^3.6.0",
     "typescript": "^5.4.5"
-  },
-  "dependencies": {
-    "@hapi/joi": "^17.1.1"
   }
 }

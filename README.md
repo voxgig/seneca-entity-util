@@ -69,14 +69,6 @@ $ npm install seneca-entity-util seneca-promisify
 Use rtag to load cached version of expensive result.
 
 
-#### Parameters
-
-
-* __space__ : string <i><small>"&nbsp;"</small></i>
-* __key__ : string <i><small>"&nbsp;"</small></i>
-* __rtag__ : string <i><small>"&nbsp;"</small></i>
-* __resolver__ : function <i><small>"&nbsp;"</small></i>
-
 
 ----------
 ### &laquo; `role:cache,stats:rtag` &raquo;
